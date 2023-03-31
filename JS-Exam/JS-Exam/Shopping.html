@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <title>Shopping Page - Sakshi Munde</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .forScroll {
+            overflow-y: auto;
+        }
+
+        .product-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 30px;
+            margin: 0;
+            padding-top: 5px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            width: 24%;
+            box-sizing: border-box;
+            float: left;
+            margin-top: 6px;
+            text-align: center;
+            border-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-top: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: 0.4s;
+        }
+
+        .content:hover {
+            box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+            transform: translate(0px, -8px);
+            transition: 0.6s;
+        }
+
+        .img {
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .p {
+            text-align: center;
+            color: #b2bec3;
+            padding: 0 8px;
+        }
+
+        h6 {
+            font-size: 26px;
+            text-align: center;
+            color: #222f3e;
+            margin: 0;
+        }
+
+        input {
+            width: 40px;
+        }
+
+        button {
+            text-align: center;
+            font-size: 24px;
+            color: #fff;
+            width: 100%;
+            border: 0px;
+            outline: none;
+            cursor: pointer;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .buy {
+            background-color: #2183a2;
+        }
+
+        @media (max-width: 1000px) {
+            .content {
+                width: 46%;
+            }
+        }
+
+        @media (max-width: 750px) {
+            .content {
+                width: 100%;
+            }
+        }
+
+        /* Overlay */
+        .overlay {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow-y: auto;
+            transition: 0.5s;
+        }
+
+        .overlay-content {
+            position: relative;
+            padding: 20px;
+            top: 0%;
+            width: 100%;
+            /* text-align: center; */
+            margin-top: 30px;
+            color: #fff;
+        }
+
+        .overlay a {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 36px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .overlay a:hover,
+        .overlay a:focus {
+            color: #f1f1f1;
+        }
+
+        .overlay .closebtn {
+            position: absolute;
+            top: 0;
+            right: 45px;
+            font-size: 60px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .overlay {
+                overflow-y: auto;
+            }
+
+            .overlay a {
+                font-size: 20px
+            }
+
+            .overlay .closebtn {
+                font-size: 40px;
+                top: 15px;
+                right: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section>
+        <div id="myNav" class="overlay">
+            <div class="overlay-content">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <h1 class="text-center mb-5">Shopping List Project Instruction : </h1>
+                <p><a href="https://screenrec.com/share/3jIWrFdNyX" target="_blank"
+                        style="text-decoration: underline;color:#2183a2">click me for video</a></p>
+                <p><a href="https://shoppinglistiqra.netlify.app/" target="_blank"
+                        style="text-decoration: underline;color:#2183a2">demo site</a></p>
+                <h5>Coupon Code:</h5>
+                <p>The "Add Coupon" section allows the user to enter a coupon code and a coupon percentage.
+                </p>
+                <ul>
+                    <li>The coupon code should be not be empty and must be in uppercase, as well have no number.
+                    </li>
+                    <li> The coupon code should have exactly 5 characters.</li>
+                    <li> The coupon percentage should not be empty and should be a number.</li>
+                    <li>The coupon code and percentage should be saved and displayed in a dropdown list with the format
+                        [CODE] - [PERCENTAGE], where CODE is the coupon code in uppercase and PERCENTAGE is the coupon
+                        percentage <br> For example FOXXY - 20, HATKI - 50, YUIVI - 80, TKNYK - 30</li>
+                    <li>When the user clicks on the "Add Coupon" button after entering a valid coupon code and coupon
+                        percentage, it should display a message "Coupon added!!" in a green button for "3" seconds, and
+                        the input fields for coupon code and coupon percentage should be reset to empty.</li>
+                </ul>
+                <p>
+                    Note : If any of the validation checks fail, an alert message is displayed to the user. <br>
+                    "Please enter a valid coupon code in uppercase with no numbers and exactly 5 characters, and a
+                    non-empty coupon percentage that is a number."
+                </p>
+                <hr>
+                <h5>Product Form Validation:</h5>
+                <p>The "Add Product" section consists of a form that allows the user to add a product to the shopping
+                    cart. It includes the following fields:</p>
+                <ul>
+                    <li>If the user has not chosen an image for the product, then a default image should be displayed.
+                    </li>
+                    <li>
+                        Validation:
+                        <ul>
+                            <li>The name field must not be empty, and it should contain only alphabetic characters and
+                                spaces.
+                                This
+                                means that it should not contain any numbers or special characters.</li>
+                            <li>The description field must not be empty.</li>
+                            <li>The price field must not be empty, and it should contain only numeric characters. This
+                                means
+                                that it
+                                should not contain any alphabetic characters.</li>
+                        </ul>
+                    </li>
+                    <li>Once all the validation is completed, the product will be added to the product gallery and
+                        displayed in the list with the product image, name, description, price, and "Add to Cart"
+                        button.</li>
+                </ul>
+                <p>
+                    Note : If any of the validation checks fail, an alert message is displayed to the user. <br>
+                    -- Please enter all product information.<br>
+                    -- Please enter a valid product name without numbers. <br>
+                    -- Please enter a valid price without alphabets. <br>
+                </p>
+                <hr>
+                <h5>Product Gallery Section:</h5>
+
+                <p>The "Product Gallery" section displays the list of products available for purchase. It includes the
+                    following components:
+                </p>
+
+                <ul>
+                    <li>Product Image: It displays the image of the product.</li>
+                    <li>Product Name: It displays the name of the product.</li>
+                    <li>Product Description: It displays the description of the product.</li>
+                    <li>Product Price: It displays the price of the product.</li>
+                    <li>Add to Cart: A button to add the product to the shopping cart.</li>
+                </ul>
+                <hr>
+                <h5>Shopping Cart Section:</h5>
+                <p>The "Shopping Cart" section displays the list of products added to the cart, along with their details
+                    like image, name, price, and quantity. It includes the following components:</p>
+
+                <ul>
+                    <li>Cart Table: It displays the list of products added to the cart in a table format.</li>
+                    <li>If the cart is empty, it shows a message "Your cart is empty".</li>
+                    <li>Each added product will have a quantity input to add the desired quantity.</li>
+                    <li>If the cart has products, the following information will be displayed:
+                        <ul>
+                            <li>Total Amount: It displays the total amount of all the products added to the cart.</li>
+                            <li>The "Apply Coupon - dropdown" feature allows the user to enter a previously generated
+                                coupon code to get a discount on the total amount. </li>
+                            <li>Final Amount: This displays the final amount after a coupon code has been applied to the
+                                total amount of all products in the cart.</li>
+                            <li>Payable Amount: A button to proceed to the payment page with the final amount.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p><a href="https://screenrec.com/share/oK2sMRTDB6" target="_blank"
+                        style="text-decoration: underline;color:#2183a2; font-size: 22px;">Check Payment Method
+                        Validation Demo</a></p>
+                <p><a target="_blank" style="text-decoration: underline;color:#2183a2; font-size: 22px;"
+                        href="https://www.figma.com/proto/ZCIblrS7lJ8Cap6BLqQx1s/Payment-Method?node-id=1-8&starting-point-node-id=1%3A8&hide-ui=1">Payment
+                        Method Instruction</a>
+                </p>
+            </div>
+        </div>
+        <span style="font-size:30px;cursor:pointer;float: right;" onclick="openNav()">&#9776; Instruction</span>
+        <script>
+            function openNav() {
+                document.getElementById("myNav").style.height = "100%";
+            }
+
+            function closeNav() {
+                document.getElementById("myNav").style.height = "0%";
+            }
+        </script>
+    </section>
+    <h3 class="text-center">Shopping Page Created by "Sakshi Munde"</h3>
+    <hr>
+    <div class="container mt-4">
+        <div class="row ">
+            <label class="col-2 col-form-label font-weight-bold" for="product-name">Add Coupon :</label>
+            <div class="col-3">
+                <input type="text" class="form-control" placeholder="Enter Coupon code" />
+            </div>
+            <div class="col-3">
+                <input type="text" class="form-control" placeholder="Enter Coupon percentage" />
+            </div>
+            <div class="col-2">
+                <button class="btn btn-secondary">Add Coupon</button>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-success" disabled>
+                    Coupon added!!
+                </button>
+            </div>
+        </div>
+        <hr />
+        <div class="row" style="display: flex">
+            <div class="col-6" style="border-right: 2px solid #eee">
+                <form id="product-form" autocomplete="off">
+                    <label class="font-weight-bold" for="product-image" class="font-weight-bold">Product Image:</label>
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-md-6" style="height: 135px; width: 200px">
+                            <img src="./default.jpg" id="preview"
+                                style="width: 100%; height: 100%; object-fit: contain" />
+                        </div>
+
+                        <div class="col-6">
+                            <input type="file" class="form-control" id="product-image" />
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="font-weight-bold" for="product-name">Product Name:</label>
+                        <input type="text" class="form-control" id="product-name" placeholder="Enter Product Name" />
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="font-weight-bold" for="product-description">Product Description:</label>
+                        <textarea class="form-control" id="product-description"
+                            placeholder="Enter Product Description"></textarea>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="font-weight-bold" for="product-price">Product Price:</label>
+                        <input type="text" class="form-control" id="product-price" placeholder="Enter Product Price" />
+                    </div>
+                    <br>
+
+                    <button type="submit" class="btn btn-primary mt-2">
+                        Add to List
+                    </button>
+                </form>
+            </div>
+            <div class="col-6 forScroll mt-1" style="height: 21rem; position: relative">
+                <table id="cart" class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items">
+                        <tr id="empty-cart">
+                            <td colspan="5" class="text-center">Your cart is empty</td>
+                        </tr>
+                    </tbody>
+                    <tfoot id="carttrow" style="border: 2px solid;">
+                        <tr>
+                            <td colspan="4">Total Amount</td>
+                            <td id="total"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Apply Code</td>
+                            <td colspan="2">
+                                <select id="couponselect" class="form-select">
+                                    <option>Select Coupon</option>
+                                    <option value="13">FASTP</option>
+                                    <option value="20">TAKEF</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Final Amount <a
+                                    href="https://www.omnicalculator.com/finance/percentage-discount"
+                                    target="_blank">check calculation here</a></td>
+                            <td id="finalPrice"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <a href="./PaymentForm.html" class="btn btn-primary" id="toPayment">Payble Amount<span
+                                        id="finalPrice"></span></a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="gallery row" id="products">
+            <img src="">
+            <h3 class="product-name"></h3>
+            <p class="product-description"></p>
+            <p class="product-price"></p>
+            <div class="product-quantity">
+                <button class='buy add-to-cart mt-2'></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const input = document.getElementById('product-image');
+        const preview = document.getElementById('preview');
+        input.addEventListener('change', () => {
+            const file = input.files[0];
+            const url = URL.createObjectURL(file);
+            preview.src = url;
+        });
+    </script>
+    <script>
+        const couponCodeInput = document.querySelector('input[placeholder="Enter Coupon code"]');
+        const couponPercentInput = document.querySelector('input[placeholder="Enter Coupon percentage"]');
+        const addCouponButton = document.querySelector('.col-2 button.btn-secondary');
+        const couponAddedButton = document.querySelector('.col-2 button.btn-success');
+        const couponOptions = document.querySelector('#couponselect');
+        let discount = 0;
+
+        addCouponButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const couponCode = couponCodeInput.value.toUpperCase().trim();
+            const couponPercentage = couponPercentInput.value.trim();
+
+            if (couponCode.length !== 5 || !/^[A-Z]+$/.test(couponCode) || isNaN(couponPercentage) || couponPercentage === '') {
+                alert('Please enter a valid coupon code in (uppercase) with (no numbers) and (exactly 5 characters), and (a non-empty coupon percentage that is a number)');
+                return;
+            }
+
+            couponAddedButton.removeAttribute('disabled');
+            couponAddedButton.innerText = 'Coupon added!!';
+            discount = parseInt(couponPercentage);
+            couponCodeInput.value = '';
+            couponPercentInput.value = '';
+            couponOptions.innerHTML += `<option value="${discount}">${couponCode} - ${discount}%</option>`;
+            setTimeout(() => {
+                couponAddedButton.setAttribute('disabled', true);
+                couponAddedButton.innerText = 'Add Coupon';
+            }, 3000);
+        });
+
+        const productForm = document.querySelector('#product-form');
+        const productNameInput = document.querySelector('#product-name');
+        const productDescInput = document.querySelector('#product-description');
+        const productPriceInput = document.querySelector('#product-price');
+        const productImageInput = document.querySelector('#product-image');
+        const productGallery = document.querySelector('.gallery.row');
+        const cartItems = document.querySelector('#cart-items');
+        const emptyCart = document.querySelector('#empty-cart');
+        const total = document.querySelector('#total');
+        const finalPrice = document.querySelector('#finalPrice');
+        const toPayment = document.querySelector('#toPayment');
+
+        productForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const productName = productNameInput.value.trim();
+            const productDesc = productDescInput.value.trim();
+            const productPrice = productPriceInput.value.trim();
+            const productImage = productImageInput.files[0];
+
+            if (productName === '' || !/^[a-zA-Z\s]+$/.test(productName)) {
+                alert('Please enter a valid product name without numbers.');
+                return;
+            }
+
+            if (productPrice === '' || isNaN(productPrice)) {
+                alert('Please enter a valid price without alphabets.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const productHTML = `
+      <div class="col-3 mb-3">
+        <div class="card">
+          <img src="${reader.result}" class="card-img-top product-image img">
+          <div class="card-body">
+            <h3 class="card-title product-name" style="margin-bottom:0rem;">${productName}</h3>
+            <p class="card-text product-description">${productDesc}</p>
+            <p class="card-text product-price">$${productPrice}</p>
+            <div class="product-quantity">
+              <button class="buy add-to-cart btn btn-primary">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+                productGallery.innerHTML += productHTML;
+                productNameInput.value = '';
+                productDescInput.value = '';
+                productPriceInput.value = '';
+                productImageInput.value = '';
+            };
+            reader.readAsDataURL(productImage);
+        });
+
+    </script>
+    <script>
+
+        const cart = [];
+
+        productGallery.addEventListener('click', function (e) {
+            if (e.target.classList.contains('add-to-cart')) {
+                const productCard = e.target.closest('.card');
+                const productImage = productCard.querySelector('.product-image').getAttribute('src');
+                const productName = productCard.querySelector('.product-name').innerText;
+                const productDesc = productCard.querySelector('.product-description').innerText;
+                const productPrice = parseFloat(productCard.querySelector('.product-price').innerText.slice(1));
+                const quantity = 1;
+
+                const product = {
+                    image: productImage,
+                    name: productName,
+                    desc: productDesc,
+                    price: productPrice,
+                    quantity: quantity,
+                };
+
+                cart.push(product);
+
+                updateCart();
+            }
+        });
+
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let cartTotal = 0;
+            let discountTotal = 0;
+
+            for (let i = 0; i < cart.length; i++) {
+                const product = cart[i];
+                const productTotal = product.quantity * product.price;
+
+                cartTotal += productTotal;
+                discountTotal += (productTotal * (discount / 100));
+
+                const cartHTML = `
+      <tr>
+        <td><img src="${product.image}" style="width: 50px; height: 50px; object-fit: contain" /></td>
+        <td>${product.name}</td>
+        <td>$${product.price}</td>
+        <td><input type="number" min="1" value="${product.quantity}" class="cart-quantity"></td>
+        <td>$${productTotal.toFixed(2)}</td>
+       
+      </tr>
+    `;
+                cartItems.innerHTML += cartHTML;
+            }
+
+            if (cart.length === 0) {
+                emptyCart.style.display = 'block';
+                total.innerText = '$0.00';
+                finalPrice.innerText = '$0.00';
+            } else {
+                emptyCart.style.display = 'none';
+                total.innerText = '$' + cartTotal.toFixed(2);
+                finalPrice.innerText = '$' + (cartTotal - discountTotal).toFixed(2);
+            }
+        }
+
+        cartItems.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-from-cart')) {
+                const productRow = e.target.closest('tr');
+                const productName = productRow.querySelector('td:nth-child(2)').innerText;
+
+                for (let i = 0; i < cart.length; i++) {
+                    if (cart[i].name === productName) {
+                        cart.splice(i, 1);
+                        break;
+                    }
+                }
+
+                updateCart();
+            }
+        });
+
+        cartItems.addEventListener('change', function (e) {
+            if (e.target.classList.contains('cart-quantity')) {
+                const productRow = e.target.closest('tr');
+                const productName = productRow.querySelector('td:nth-child(2)').innerText;
+                const newQuantity = parseInt(e.target.value);
+
+                for (let i = 0; i < cart.length; i++) {
+                    if (cart[i].name === productName) {
+                        cart[i].quantity = newQuantity;
+                        break;
+                    }
+                }
+
+                updateCart();
+            }
+        });
+        couponOptions.addEventListener('change', function (e) {
+            discount = parseInt(e.target.value);
+            updateCart();
+        });
+
+    </script>
+</body>
+
+</html>
